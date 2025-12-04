@@ -89,4 +89,28 @@ class ApiService {
       throw Exception('Erreur de connexion: $e');
     }
   }
+
+  //  Rechercher des films
+ Future<List<Movie>> searchMovies(String query, {int page = 1}) async {
+    if (query.isEmpty) return [];
+    
+    try {
+      final url = Uri.parse(
+        '$baseUrl/search/movie?api_key=$apiKey&language=$language&query=$query&page=$page'
+      );
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        List<Movie> movies = (data['results'] as List)
+            .map((movie) => Movie.fromJson(movie))
+            .toList();
+        return movies;
+      } else {
+        throw Exception('Erreur ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Erreur de recherche: $e');
+    }
+  }
 }
