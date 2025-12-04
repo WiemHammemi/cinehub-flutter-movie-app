@@ -1,4 +1,4 @@
-gi
+
 import 'package:flutter/material.dart';
 import 'package:cine_hub/models/movie.dart';
 import 'package:cine_hub/services/api_service.dart';
